@@ -1,65 +1,40 @@
 import './Header.scss'
-import clsx from 'clsx'
 import Logo from '@/components/Logo'
-import Button from '@/components/Button'
+import clsx from 'clsx'
+import Socials from '@/components/Socials'
 import BurgerButton from '@/components/BurgerButton'
-import Icon from '@/components/Icon'
 
 export default (props) => {
   const { url } = props
 
   const menuItems = [
-    {
-      label: 'Home',
-      href: '/',
-    },
-    {
-      label: 'About',
-      href: '/about',
-    },
+    { label: 'Home', href: '/' },
+    { label: 'Recipes', href: '/recipes' },
+    { label: 'Blog', href: '/blog' },
+    { label: 'Contact', href: '/contact' },
+    { label: 'About us', href: '/about' },
   ]
 
   return (
-    <header className="header" data-js-overlay-menu="">
+    <header className='header' data-js-mobile-menu="">
       <div className="header__inner container">
-        <Logo className="header__logo" loading="eager" />
-        <dialog
-          className="header__overlay-menu-dialog"
-          data-js-overlay-menu-dialog=""
-        >
-          <nav className="header__menu">
+        <Logo className="header__logo" />
+        <nav className="header__menu" data-js-mobile-menu-overlay="">
             <ul className="header__menu-list">
-              {menuItems.map(({ label, href }, index) => (
-                <li className="header__menu-item" key={index}>
-                  <a
-                    className={clsx(
-                      'header__menu-link',
-                      href === url && 'is-active'
-                    )}
-                    href={href}
-                  >
+              {menuItems.map(({ label, href }) => (
+                <li key={label} className="header__menu-item">
+                  <a className={clsx('header__menu-link',
+                    { 'header__menu-link--active': url === href })} href={href}>
                     {label}
                   </a>
                 </li>
               ))}
             </ul>
-          </nav>
-          <div className="header__actions">
-            <Button className="header__button">
-              <span>Search</span>
-              <Icon name="search" />
-            </Button>
-            <Button className="header__button">
-              <span>Notifications</span>
-              <Icon name="notification" />
-            </Button>
-          </div>
-        </dialog>
-        <BurgerButton
-          className="header__burger-button visible-tablet"
-          extraAttrs={{
-            'data-js-overlay-menu-burger-button': '',
-          }}
+        </nav>
+        <Socials className="header__socials" />
+        <BurgerButton 
+          className="header__burger-button visible-mobile" 
+          extraAttrs={{ 'data-js-mobile-menu-burger-button': '' }} 
         />
       </div>
     </header>
